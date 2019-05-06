@@ -39,6 +39,7 @@ int main(int argc, char **argv)
 }
 
 //问题：客户端ctl+c，服务端也会退出
+//向一个已经对方关闭的sockfd发送导致
 /*
  * client_serve - client process routine
  */
@@ -47,7 +48,6 @@ void *client_serve(void *vargp)
 	int control_sock = *((int *)vargp);
 	char cmd[MAXLINE];
 	char *argv[MAXARGS];
-	int rc;
 
 	Pthread_detach(pthread_self());
 	free(vargp);
@@ -62,11 +62,12 @@ void *client_serve(void *vargp)
 		Pthread_cancel(pthread_self());
 	}
 
-	//list后出现段错误
 	while (1) {
+		cmd[0] = '\0';
 		Recv(control_sock, cmd, MAXLINE, 0);
 		parseline(cmd, argv);
 
+		int rc = 221;
 		if (strcmp(argv[0], "quit") == 0)
 			rc = 221;
 		else if ((strcmp(argv[0], "list") == 0) || (strcmp(argv[0], "get") == 0))

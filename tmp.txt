@@ -1,0 +1,4 @@
+-rw-r--r-- 1 liu  liu   660 6月  18 11:18 Makefile
+-rw-r--r-- 1 liu  liu    27 6月  18 23:05 README.md
+drwxr-xr-x 2 liu  liu  4096 6月  19 11:35 server
+-rw-r--r-- 1 root root    0 6月  19 11:35 tmp.txt

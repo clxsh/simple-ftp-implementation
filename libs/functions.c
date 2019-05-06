@@ -217,10 +217,16 @@ int recv_code(int sockfd)
 
 int parseline(const char *cmd, char **argv)
 {
+	
 	static char array[MAXLINE];
 	char *buf = array;
 	char *delim;
 	int argc = 0;
+
+	if (strlen(cmd) == 0) {
+		argv[0] = buf;
+		return -1;
+	}
 
 	strcpy(buf, cmd);
 	buf[strlen(buf) - 1] = ' ';
